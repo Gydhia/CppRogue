@@ -1,0 +1,89 @@
+{
+    "breeds": [
+        {
+            "name": "Giant bat",
+            "description": "Will suck your blood or cut you alive.",
+            "maxHealth": 15,
+            "speed": 5,
+            "dodge": 3,
+            "experience": 3,
+            "trackingDistance": 4,
+            "motilities": [
+                "fly"
+            ],
+            "graphics": {
+                "texture": "Image/others.png",
+                "bounds": {
+                    "x": 0,
+                    "y": 576,
+                    "width": 32,
+                    "height": 32
+                }
+            }
+        },
+        {
+            "name": "Yeti",
+            "description": "A big guy with fur and frost abilities.",
+            "maxHealth": 45,
+            "speed": 2,
+            "dodge": 1,
+            "experience": 6,
+            "trackingDistance": 2,
+            "motilities": [
+                "walk",
+                "swim"
+            ],
+            "graphics": {
+                "texture": "Image/others.png",
+                "bounds": {
+                    "x": 128,
+                    "y": 768,
+                    "width": 32,
+                    "height": 32
+                }
+            }
+        },
+        {
+            "name": "Goblin",
+            "description": "Really you do not know this creature ?",
+            "maxHealth": 5,
+            "speed": 8,
+            "dodge": 5,
+            "experience": 1,
+            "trackingDistance": 3,
+            "motilities": [
+                "walk"
+            ],
+            "graphics": {
+                "texture": "Image/goblins.png",
+                "bounds": {
+                    "x": 256,
+                    "y": 96,
+                    "width": 32,
+                    "height": 32
+                }
+            }
+        },
+        {
+            "name": "Kobold",
+            "description": "Mischievous creature fond of tricking and frightening mortals.",
+            "maxHealth": 2,
+            "speed": 5,
+            "dodge": 8,
+            "experience": 1,
+            "trackingDistance": 3,
+            "motilities": [
+                "walk"
+            ],
+            "graphics": {
+                "texture": "Image/kobolds.png",
+                "bounds": {
+                    "x": 96,
+                    "y": 96,
+                    "width": 32,
+                    "height": 32
+                }
+            }
+        }
+    ]
+}

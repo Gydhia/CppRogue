@@ -1,0 +1,7 @@
+### SFML ###
+# Keep track of SFML libs
+!bin
+!bin/*.dll
+!lib
+!lib/*.lib
+!lib/*.pdb

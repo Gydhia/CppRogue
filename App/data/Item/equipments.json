@@ -1,0 +1,134 @@
+{
+    "items": [
+        {
+            "name": "Wood stick",
+            "description": "Not likely to be of any use but fire fuel.",
+            "statistics": {
+                "armor": 0,
+                "price": 1,
+                "weight": 1,
+                "heft": 0,
+                "fuel": 4
+            },
+            "attack": {
+                "damage": 1
+            },
+            "slots": [
+                "lefthand",
+                "righthand"
+            ]
+        },
+        {
+            "name": "Log axe",
+            "description": "Used mainly to cut wood, it can also be used as a basic weapon.",
+            "statistics": {
+                "armor": 1,
+                "price": 5,
+                "weight": 3,
+                "heft": 2,
+                "fuel": 3
+            },
+            "attack": {
+                "damage": 4
+            },
+            "slots": [
+                "lefthand",
+                "righthand"
+            ]
+        },
+        {
+            "name": "Fiery Dragon Sword",
+            "description": "An ancient weapon that sets fire to everything it touches",
+            "statistics": {
+                "armor": 1,
+                "price": 112,
+                "weight": 4,
+                "heft": 22,
+                "fuel": 0
+            },
+            "attack": {
+                "element": "Fire",
+                "damage": 12
+            },
+            "slots": [
+                "lefthand",
+                "righthand"
+            ],
+            "enchantment": "HellBringer"
+        },
+        {
+            "name": "Shield of frost",
+            "description": "Can be used as both a weapon and a protection.",
+            "statistics": {
+                "armor": 8,
+                "price": 33,
+                "weight": 9,
+                "heft": 8,
+                "fuel": 3
+            },
+            "attack": {
+                "damage": 5
+            },
+            "slots": [
+                "lefthand"
+            ],
+            "enchantment": "ShivaBlessing"
+        },
+        {
+            "name": "Wood helmet",
+            "description": "Good enough protection for your head.",
+            "statistics": {
+                "armor": 2,
+                "price": 1,
+                "weight": 4,
+                "heft": 0,
+                "fuel": 4
+            },
+            "slots": [
+                "Helmet"
+            ]
+        },
+        {
+            "name": "Chain mail",
+            "description": "You looks like a knight with this.",
+            "statistics": {
+                "armor": 10,
+                "price": 22,
+                "weight": 15,
+                "heft": 5,
+                "fuel": 4
+            },
+            "slots": [
+                "chest"
+            ]
+        },
+        {
+            "name": "Leather shoes",
+            "description": "Basic protection for your legs.",
+            "statistics": {
+                "armor": 2,
+                "price": 11,
+                "weight": 2,
+                "heft": 2,
+                "fuel": 3
+            },
+            "slots": [
+                "boots"
+            ]
+        },
+        {
+            "name": "Necklace",
+            "description": "Good value but that it.",
+            "statistics": {
+                "armor": 1,
+                "price": 55,
+                "weight": 1,
+                "heft": 1,
+                "fuel": 1
+            },
+            "slots": [
+                "necklace"
+            ]
+        }
+    ]
+}

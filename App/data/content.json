@@ -1,0 +1,13 @@
+{
+    "items": [
+        "Item/collectables.json",
+        "Item/equipments.json"
+    ],
+    "races": [
+        "Hero/races.json"
+    ],
+    "hero": "Hero/hero.json",
+    "breeds": [
+        "Monster/breeds.json"
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "items": [
+        {
+            "name": "Apple",
+            "description": "There are more than 7,500 known cultivars of apples. This one is juicy and red.",
+            "statistics": {
+                "armor": 0,
+                "price": 1,
+                "weight": 1,
+                "heft": 0,
+                "fuel": 4
+            }
+        },
+        {
+            "name": "Banana",
+            "description": "A fruit usually elongated and curved.",
+            "statistics": {
+                "armor": 0,
+                "price": 1,
+                "weight": 1,
+                "heft": 0,
+                "fuel": 4
+            }
+        }
+    ]
+}

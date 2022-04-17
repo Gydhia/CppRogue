@@ -1,0 +1,65 @@
+{
+       "types": [
+              {
+                     "id": 0,
+                     "name": "none",
+                     "motilities": [
+                            "walk",
+                            "fly"
+                     ],
+                     "cost": 1
+              },
+              {
+                     "id": 1,
+                     "name": "grass",
+                     "motilities": [
+                            "walk",
+                            "fly"
+                     ],
+                     "cost": 1
+              },
+              {
+                     "id": 2,
+                     "name": "sand",
+                     "motilities": [
+                            "walk",
+                            "fly"
+                     ],
+                     "cost": 2
+              },
+              {
+                     "id": 3,
+                     "name": "mud",
+                     "motilities": [
+                            "walk",
+                            "fly"
+                     ],
+                     "cost": 7
+              },
+              {
+                     "id": 4,
+                     "name": "water",
+                     "motilities": [
+                            "fly",
+                            "swim"
+                     ],
+                     "cost": 4
+              },
+              {
+                     "id": 5,
+                     "name": "wall",
+                     "motilities": [
+                            "fly"
+                     ],
+                     "cost": 5
+              },
+              {
+                     "id": 6,
+                     "name": "hole",
+                     "motilities": [
+                            "fly"
+                     ],
+                     "cost": 5
+              }
+       ]
+}

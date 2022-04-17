@@ -1,0 +1,32 @@
+{
+    "name": "Cpp",
+    "graphics": {
+        "texture": "Image/dwarves.png",
+        "bounds": {
+            "x": 0,
+            "y": 32,
+            "width": 32,
+            "height": 32
+        }
+    },
+    "race": "Dwarf",
+    "gold": 10,
+    "position": {
+        "x": 128,
+        "y": 480
+    },
+    "equipments": [
+        {
+            "slot": "righthand",
+            "name": "Log axe"
+        },
+        {
+            "slot": "chest",
+            "name": "Chain mail"
+        },
+        {
+            "slot": "lefthand",
+            "name": "Shield of frost"
+        }
+    ]
+}

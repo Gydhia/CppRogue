@@ -1,0 +1,70 @@
+{
+    "races": [
+        {
+            "name": "Dwarf",
+            "description": "Dwarf are small but stocky humanoid stone creature almost always bearded. They are a mining and smithing centric society with a monarchy.",
+            "statistics": [
+                {
+                    "name": "strength",
+                    "value": 15
+                },
+                {
+                    "name": "endurance",
+                    "value": 20
+                },
+                {
+                    "name": "agility",
+                    "value": 10
+                },
+                {
+                    "name": "intellect",
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "name": "Grawl",
+            "description": "The Grawl are humanoid creatures. This species has an ape like physique and seems to possess a primitive form of culture with a social hierarchy and different professions. ",
+            "statistics": [
+                {
+                    "name": "strength",
+                    "value": 20
+                },
+                {
+                    "name": "endurance",
+                    "value": 15
+                },
+                {
+                    "name": "agility",
+                    "value": 10
+                },
+                {
+                    "name": "intellect",
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "name": "Chaar",
+            "description": "A savage race of sentient beasts, the Charr will use any means available to destroy their enemies: an ambush is as honorable as a fair fight, as victory is what matters. Though Charr have no concept of mercy, they can be protective of those within their tribe. ",
+            "statistics": [
+                {
+                    "name": "strength",
+                    "value": 20
+                },
+                {
+                    "name": "endurance",
+                    "value": 10
+                },
+                {
+                    "name": "agility",
+                    "value": 15
+                },
+                {
+                    "name": "intellect",
+                    "value": 5
+                }
+            ]
+        }
+    ]
+}

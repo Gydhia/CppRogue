@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<!-- Configurations that affect the Test Framework -->
+  	<RunConfiguration>
+    	<MaxCpuCount>4</MaxCpuCount>
+    	<TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
+  	</RunConfiguration>
+
+    <!-- Adapter Specific sections -->
+    <Catch2Adapter>
+        <FilenameFilter>Tests</FilenameFilter> <!-- Regex to match executable -->
+        <DiscoverTimeout>500</DiscoverTimeout>
+        <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
+    	<Logging>normal</Logging>
+    	<MessageFormat>StatsOnly</MessageFormat>
+    	<StackTraceFormat>ShortInfo</StackTraceFormat>
+    </Catch2Adapter>
+
+</RunSettings>
