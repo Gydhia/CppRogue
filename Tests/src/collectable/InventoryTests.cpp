@@ -21,11 +21,8 @@ TEST_CASE("Can create an Inventory", "[Inventory]")
 
     SECTION("Can access inventory current state")
     {
-        // @TODO
-        // @TODO Implémenter le test
-        REQUIRE(false);
-        // @TODO Implémenter le test
-        // @TODO
+        bool testPassed = bag.location() == collectable::Location::Bag && bag.capacity() == bagCapacity;
+        REQUIRE(testPassed);
     }
 }
 
@@ -43,27 +40,33 @@ TEST_CASE("An item can be added to the inventory", "[Inventory]")
 
     SECTION("Adding an item can be fully completed")
     {
-        // @TODO
-        // @TODO Implémenter le test
-        REQUIRE(false);
-        // @TODO Implémenter le test
-        // @TODO
+        cppRogue::collectable::Item sword = cppRogue::collectable::Item{swordData};
+        cppRogue::collectable::Inventory::AddResult result = shop.tryAdd(sword, 1);
+        
+        if (result.isComplete() && result.added == 1)
+            REQUIRE(true);
+        else
+            REQUIRE(false);
 
         SECTION("Adding an item can be partial if item max stack is reached")
         {
-            // @TODO
-            // @TODO Implémenter le test
-            REQUIRE(false);
-            // @TODO Implémenter le test
-            // @TODO
+            cppRogue::collectable::Item bananaItem = cppRogue::collectable::Item{banana};
+            cppRogue::collectable::Inventory::AddResult bananaResult = shop.tryAdd(bananaItem, 12);
+            
+            if (bananaResult.status() == cppRogue::collectable::Inventory::AddResult::Status::Partial)
+                REQUIRE(true);
+            else
+                REQUIRE(false);
 
             SECTION("Adding an item can fail if there is not enough available slots")
             {
-                // @TODO
-                // @TODO Implémenter le test
-                REQUIRE(false);
-                // @TODO Implémenter le test
-                // @TODO
+                cppRogue::collectable::Item appleItem = cppRogue::collectable::Item{apple};
+                cppRogue::collectable::Inventory::AddResult appleResult = shop.tryAdd(appleItem, 12);
+                
+                if (appleResult.status() == cppRogue::collectable::Inventory::AddResult::Status::OutOfSpace)
+                    REQUIRE(true);
+                else
+                    REQUIRE(false);
             }
         }
     }
@@ -81,27 +84,27 @@ TEST_CASE("An Item can be removed from the inventory", "[Inventory]")
 
     SECTION("Removing an item does not remove the whole stack if still an item inside")
     {
-        // @TODO
-        // @TODO Implémenter le test
-        REQUIRE(false);
-        // @TODO Implémenter le test
-        // @TODO
+        std::optional<cppRogue::collectable::Item> removedItem = shop.tryRemove(sword.name());
+        if (removedItem != std::nullopt && shop.count() == 1)
+            REQUIRE(true);
+        else
+            REQUIRE(false);
 
         SECTION("The whole stack is removed when last item of the stack is removed")
         {
-            // @TODO
-            // @TODO Implémenter le test
-            REQUIRE(false);
-            // @TODO Implémenter le test
-            // @TODO
+            removedItem = shop.tryRemove(sword.name());
+            if (removedItem != std::nullopt && shop.count() == 0)
+                REQUIRE(true);
+            else
+                REQUIRE(false);
 
             SECTION("Trying to remove an item that does not exist is safe")
             {
-                // @TODO
-                // @TODO Implémenter le test
-                REQUIRE(false);
-                // @TODO Implémenter le test
-                // @TODO
+                removedItem = shop.tryRemove(sword.name());
+                if (removedItem == std::nullopt)
+                    REQUIRE(true);
+                else
+                    REQUIRE(false);
             }
         }
     }
@@ -129,19 +132,23 @@ TEST_CASE("Two Inventory can be merged together", "[Inventory]")
 
     SECTION("A merge is a success if there is enough room")
     {
-        // @TODO
-        // @TODO Implémenter le test
-        REQUIRE(false);
-        // @TODO Implémenter le test
-        // @TODO
+        cppRogue::collectable::Inventory::MergeResult mResult = bag.tryMerge(lootOnGround);
+        if (mResult.isComplete())
+            REQUIRE(true);
+        else
+            REQUIRE(false);
 
         SECTION("A merge is a failure if there is not enough room")
         {
-            // @TODO
-            // @TODO Implémenter le test
-            REQUIRE(false);
-            // @TODO Implémenter le test
-            // @TODO
+            addResult = lootOnGround.tryAdd(collectable::Item{swordData}, 2);
+            addResult = lootOnGround.tryAdd(collectable::Item{appleData}, 4);
+
+            mResult = bag.tryMerge(lootOnGround);
+
+            if (mResult.status() == cppRogue::collectable::Inventory::MergeResult::Status::Complete)
+                REQUIRE(false);
+            else
+                REQUIRE(true);
         }
     }
 }

@@ -10,13 +10,21 @@ Inventory::Inventory(Location location, std::size_t capacity)
     m_inventoryStacks.reserve(capacity);
 }
 
+std::size_t Inventory::count(const Item& item) const {
+    
+    int total = 0;
+    for (auto&& stack : m_inventoryStacks) {
+        if (item.name() == stack.item.name()) { 
+            total += stack.count;
+        }
+    }
+
+    return total;
+}
+
 Inventory::AddResult Inventory::tryAdd(Item newItem, int count = 1)
 {
-    // @INFO
-    // @INFO Ne pas dépasser la capacité maximale de "Inventory"
-    // @INFO Ne pas dépasser la capacité maximale associé à chaque "Item
-    // @INFO AddResult doit contenir
-    // @INFO
+    if (count == 0) return AddResult{0, 0};
 
     AddResult result;
     int remaining = count;
@@ -46,24 +54,31 @@ Inventory::AddResult Inventory::tryAdd(Item newItem, int count = 1)
         if (m_inventoryStacks.capacity() == m_inventoryStacks.size())  {
             result.added = 0;
         } else {
-            m_inventoryStacks.emplace_back(ItemStack(count, newItem));
-            result.added = count;
-            result.remaining = 0;
+            if (count > newItem.StackCapacity())  { 
+                result.added = newItem.StackCapacity();
+                result.remaining = count - result.added; 
+            } else {
+                result.added = count;
+                result.remaining = 0;
+            }
+            m_inventoryStacks.emplace_back(ItemStack(result.added, newItem));
         }
     }    
 
     return result;
 }
 
-Inventory::MergeResult Inventory::tryMerge(const Inventory& other)
+Inventory::MergeResult Inventory::tryMerge(Inventory& other)
 {
-    // @INFO
-    // @INFO Pensez à réutilisez les autres méthodes
-    // @INFO
-
-    for (auto stack : other.m_inventoryStacks) { 
+    for (auto& stack : other.m_inventoryStacks) { 
         AddResult res = tryAdd(stack.item, stack.count);
         stack.count -= res.added;
+    }
+    for (size_t i = 0; i < other.count(); i++) {
+        if (other.m_inventoryStacks[i].count == 0) {
+            other.tryRemove(other.m_inventoryStacks[i].item.name()); 
+            i--;
+        }
     }
 
     return Inventory::MergeResult{other};
@@ -78,13 +93,17 @@ std::optional<Item> Inventory::tryRemove(std::string_view itemName)
         if (stack.item.name() == itemName)
         {
             removedItem = stack.item;
-            m_inventoryStacks.erase(m_inventoryStacks.begin() + index);
+            if (stack.count > 1) 
+                stack.count--;
+            else 
+                m_inventoryStacks.erase(m_inventoryStacks.begin() + index);
+
             break;
         }
         index++;
     }
 
-    return std::nullopt;
+    return removedItem;
 };
 
 Inventory::AddResult::Status Inventory::AddResult::status() const

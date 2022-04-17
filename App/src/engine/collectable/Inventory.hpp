@@ -54,7 +54,7 @@ class Inventory
     Inventory(Location location, std::size_t capacity);
     ~Inventory() = default;
 
-    [[nodiscard]] inline Location location() const;
+    [[nodiscard]] inline Location location() const { return m_location; };
 
     /**
      * @brief      True when there is no items (all stacks are empty) inside the
@@ -62,7 +62,7 @@ class Inventory
      *
      * @return     True when the inventory is empty
      */
-    [[nodiscard]] inline bool empty() const;
+    [[nodiscard]] inline bool empty() const { return m_inventoryStacks.size() == 0; };
 
     /**
      * @brief      Maximal number of different stacks of items that can be handled by this
@@ -70,14 +70,14 @@ class Inventory
      *
      * @return     Number of stacks on this inventory
      */
-    [[nodiscard]] inline std::size_t capacity() const;
+    [[nodiscard]] inline std::size_t capacity() const { return m_inventoryStacks.capacity(); };
 
     /**
      * @brief      Total number of existing stacks in this inventory.
      *
      * @return     Number of stacks in the inventory
      */
-    [[nodiscard]] inline std::size_t count() const;
+    [[nodiscard]] inline std::size_t count() const { return m_inventoryStacks.size(); };
 
     /**
      * @brief      Stack size for this specific item. Will be zero if there is no items.
@@ -105,7 +105,7 @@ class Inventory
      *
      * @return     The merge result with remaining items if any
      */
-    MergeResult tryMerge(const Inventory& other);
+    MergeResult tryMerge(Inventory& other);
 
     /**
      * @brief      Remove an Item from the inventory if possible.
