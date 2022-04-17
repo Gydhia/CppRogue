@@ -162,13 +162,49 @@ bool ContentManager::loadItems(const std::string& relativePath)
     return true;
 }
 
+
+
+bool loadBreedData(cppRogue::entity::BreedInfo& infos, const nlohmann::json& breedNode) 
+{
+    infos.armor = breedNode["armor"].get<int>();
+    infos.description = breedNode["description"].get<std::string>();
+    infos.dodge = breedNode["dodge"].get<int>();
+    infos.experience = breedNode["experience"].get<int>();
+    infos.maxHealth = breedNode["maxHealth"].get<int>();
+    infos.name = breedNode["name"].get<std::string>();
+    infos.speed = breedNode["speed"].get<int>();
+    infos.trackingDistance = breedNode["trackingDistance"].get<int>();
+
+    if (breedNode.contains("motilities"))
+    {
+        for (const auto& slotNode : breedNode["motilities"])
+        {
+            // Case insensitive
+            infos.motilities += slotNode.get<Motility>();
+        }
+    }
+
+    return true;
+}
+
 bool ContentManager::loadBreeds(const std::string& relativePath)
 {
-    // @TODO
-    // @TODO Remplir "m_breeds" à partir du JSON
-    // @TODO
+    auto rootNodeOp = json::load((m_rootPath / relativePath).generic_string());
+    if (!rootNodeOp.has_value()) { return false; }
+    nlohmann::json rootNode = rootNodeOp.value();
 
-    return false;
+    for (const auto& breedNode : rootNode["breeds"])
+    {
+        // Parse breed data
+        cppRogue::entity::BreedInfo infos{};
+        if (loadBreedData(infos, breedNode))
+        {
+            // Create item with infos
+            m_breeds.emplace_back(std::make_shared<cppRogue::entity::Breed>(infos));
+        }
+    }
+
+    return true;
 }
 
 bool loadItemData(collectable::ItemInfo& infos, const nlohmann::json& itemNode)

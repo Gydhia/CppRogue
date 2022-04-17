@@ -74,17 +74,21 @@ class Breed
     ~Breed() = default;
 
     /* GETTERS */
-    [[nodiscard]] inline std::string_view name() const;
-    [[nodiscard]] inline const BreedInfo& data() const;
+    [[nodiscard]] inline std::string_view name() const { return m_infos.name; };
+    [[nodiscard]] inline const BreedInfo& data() const { return m_infos; };
 
-    [[nodiscard]] const std::vector<AttackInfo>& attacks() const;
-    [[nodiscard]] const std::vector<DefenseInfo>& defenses() const;
+    [[nodiscard]] inline const std::vector<AttackInfo>& attacks() const { return this->m_attacks; };
+    [[nodiscard]] const std::vector<DefenseInfo>& defenses() const { return this->m_defenses; };
 
     /* SETTERS */
     Breed& add(DefenseInfo defense);
     Breed& add(AttackInfo attack);
 
   private:
+    std::vector<AttackInfo> m_attacks;
+    std::vector<DefenseInfo> m_defenses;
+
+    BreedInfo& m_infos;
     // Special private access to Monster for convenience
     friend class Monster;
 };

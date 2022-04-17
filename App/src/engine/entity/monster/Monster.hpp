@@ -8,21 +8,16 @@
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <engine/entity/monster/Breed.hpp>
+#include <engine/entity/monster/MonsterState.hpp>
 
-// @TODO
-// @TODO Refactoring de la classe pour maintenant accepter une "Breed"
-// @TODO
-// @TODO Supprimer l'ancien constructeur et conserver uniquement deux attributs
-//   - "m_state"
-//   - "m_breed"
-// @TODO
-// @TODO Mettre à jour les différents tests unitaires pour correspondre à la nouvelle interface
+// @TODO Mettre Ã  jour les diffÃ©rents tests unitaires pour correspondre Ã  la nouvelle interface
 //   - `ActionTests.cpp`
 //   - `EntityTests.cpp`
 // @TODO
 
 // @TODO
-// @TODO Compléter "onGenerateMeleeHits" en utilisant le nouvel attribut "m_breed"
+// @TODO ComplÃ©ter "onGenerateMeleeHits" en utilisant le nouvel attribut "m_breed"
 // @TODO
 
 // @TODO
@@ -31,7 +26,7 @@
 // @TODO
 
 // @TODO
-// @TODO Permettre d'afficher un monstre à l'écran à utilisant les informations de la "Breed"
+// @TODO Permettre d'afficher un monstre Ã  l'Ã©cran Ã  utilisant les informations de la "Breed"
 // @TODO
 
 // Forward declaration
@@ -47,15 +42,7 @@ namespace cppRogue::entity {
 class Monster : public Entity
 {
   public:
-    // @TODO
-    // @TODO À implémenter
-    // Monster(sf::Vector2i initialPos, Breed breed);
-    // @TODO À implémenter
-    // @TODO
-    // @TODO À supprimer
-    Monster(sf::Vector2i initialPos, const std::string& name, int maxHeal, int speed);
-    // @TODO À supprimer
-    // @TODO
+    Monster(sf::Vector2i initialPos, Breed breed);
 
     //
     // Rule of three
@@ -113,9 +100,8 @@ class Monster : public Entity
     int m_speed{};
     Motilities m_motilities{Motility::Walk};
 
-    MonsterState* m_state{};
+    MonsterState* m_state;
+    cppRogue::entity::Breed m_breed;
 };
-
 } // namespace cppRogue::entity
-
 #endif

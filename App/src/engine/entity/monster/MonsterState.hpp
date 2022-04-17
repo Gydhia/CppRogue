@@ -1,5 +1,6 @@
 #ifndef CPPROGUE_MONSTERSTATE_HPP
 #define CPPROGUE_MONSTERSTATE_HPP
+#include <memory>
 
 // Forward declaration
 namespace cppRogue::entity {

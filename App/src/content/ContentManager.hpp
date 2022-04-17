@@ -14,10 +14,6 @@
 #include <optional>
 #include <vector>
 
-// @TODO
-// @TODO Ajouter le chargement des "Breed" lors de la lecture du JSON
-// @TODO
-
 namespace cppRogue {
 
 class ContentManager

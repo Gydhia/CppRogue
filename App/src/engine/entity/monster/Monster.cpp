@@ -2,24 +2,20 @@
 
 #include "MonsterState.hpp"
 #include "engine/core/utility/Debug.hpp"
+#include <random>
 
 #include <iomanip>
 
 namespace cppRogue::entity {
 
-Monster::Monster(sf::Vector2i initialPos, const std::string& name, int maxHeal, int speed)
-    : Entity{initialPos},
-      m_name{name},
-      m_maxHeal{maxHeal},
-      m_speed{speed},
-      m_state{new RestState{*this}}
+Monster::Monster(sf::Vector2i initialPos, Breed breed)
+    : Entity{initialPos}, m_breed{breed}, m_state{this->m_state}
 {
     ASSERT_DEBUG(m_maxHeal > 0, "maxHeal cannot be lower than 1");
     increaseHealth(m_maxHeal);
 }
 
-Monster::Monster(const Monster& other)
-    : Entity{other}, m_name{other.m_name}, m_maxHeal{other.m_maxHeal}, m_speed{other.m_speed}
+Monster::Monster(const Monster& other) : Entity{other}, m_breed {other.m_breed}
 {
     m_state = other.m_state ? other.m_state->cloneState() : nullptr;
 }
@@ -32,20 +28,21 @@ Monster& Monster::operator=(Monster other)
     return *this;
 }
 
-std::vector<Hit> Monster::onGenerateMeleeHits(const Entity& /*opponent*/)
+std::vector<Hit> Monster::onGenerateMeleeHits(const Entity& opponent)
 {
     auto meleeAttacks = std::vector<AttackInfo>{};
 
-    // @TODO
-    // @TODO Remplir "meleeAttacks" avec les attaques au contact
-    // @TODO 
-   
-    // @TODO
-    // @TODO Sélectionner une unique attaque parmis les choix possibles de manière aléatoire
-    // @TODO Possible d'utiliser "Random::generator" (`utility/Random.hpp`)
-    // @TODO
+    for (auto attack : m_breed.attacks()) { 
+        if (attack.kind() == AttackInfo::Kind::Melee)
+            meleeAttacks.emplace_back(attack);
+    }
 
-    return {};
+    int index = abs(rand()) % meleeAttacks.size();
+
+    std::vector<Hit> hits;
+    hits.emplace_back( Hit(meleeAttacks[index]));
+    
+    return hits;
 }
 
 void Monster::onGiveDamage(const action::Action& /*action*/, int, Entity* defender)
