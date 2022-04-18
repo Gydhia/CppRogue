@@ -84,8 +84,8 @@ class Breed
     std::vector<AttackInfo> m_attacks;
     std::vector<DefenseInfo> m_defenses;
 
-    BreedInfo& m_infos;
-    GraphicsInfo& m_graphics;
+    BreedInfo m_infos;
+    GraphicsInfo m_graphics;
     // Special private access to Monster for convenience
     friend class Monster;
 };

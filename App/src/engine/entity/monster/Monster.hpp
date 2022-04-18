@@ -11,24 +11,6 @@
 #include <engine/entity/monster/Breed.hpp>
 #include <engine/entity/monster/MonsterState.hpp>
 
-// @TODO Mettre à jour les différents tests unitaires pour correspondre à la nouvelle interface
-//   - `ActionTests.cpp`
-//   - `EntityTests.cpp`
-// @TODO
-
-// @TODO
-// @TODO Compléter "onGenerateMeleeHits" en utilisant le nouvel attribut "m_breed"
-// @TODO
-
-// @TODO
-// @TODO Utiliser un pointeur intelligent (std::unique_ptr) pour l'attribut "m_state"
-// @TODO Adapter le reste du code
-// @TODO
-
-// @TODO
-// @TODO Permettre d'afficher un monstre à l'écran à utilisant les informations de la "Breed"
-// @TODO
-
 // Forward declaration
 namespace cppRogue::entity {
 class MonsterState;
@@ -57,23 +39,20 @@ class Monster : public Entity
         using std::swap;
 
         // Swap them all !
-        swap(first.m_name, second.m_name);
-        swap(first.m_maxHeal, second.m_maxHeal);
-        swap(first.m_speed, second.m_speed);
+        swap(first.m_breed, second.m_breed);
         swap(first.m_state, second.m_state);
-        swap(first.m_motilities, second.m_motilities);
     }
 
     //
     // Entity INTERFACE
     //
-    [[nodiscard]] std::string_view name() const override { return m_name; }
+    [[nodiscard]] std::string_view name() const override { return m_breed.name(); }
 
-    [[nodiscard]] int maxHealth() const override { return m_maxHeal; }
+    [[nodiscard]] int maxHealth() const override { return m_breed.m_infos.maxHealth; }
 
-    [[nodiscard]] int speed() const override { return m_speed; }
+    [[nodiscard]] int speed() const override { return m_breed.m_infos.speed; }
 
-    [[nodiscard]] const Motilities& motilities() const override { return m_motilities; }
+    [[nodiscard]] const Motilities& motilities() const override { return m_breed.m_infos.motilities; }
 
     [[nodiscard]] std::vector<Hit> onGenerateMeleeHits(const Entity& opponent) override;
 
@@ -82,6 +61,8 @@ class Monster : public Entity
     void onReceiveDamage(const action::Action& action, int damage, Entity* opponent) override;
 
     void onKilled(Entity* opponent) override;
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     //
     // Misc
@@ -95,11 +76,6 @@ class Monster : public Entity
     }
 
   private:
-    std::string m_name{};
-    int m_maxHeal{};
-    int m_speed{};
-    Motilities m_motilities{Motility::Walk};
-
     std::unique_ptr<MonsterState> m_state;
     cppRogue::entity::Breed m_breed;
 };

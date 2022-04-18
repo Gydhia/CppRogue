@@ -4,6 +4,8 @@
 #include "engine/core/utility/Debug.hpp"
 #include <random>
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include <iomanip>
 
 namespace cppRogue::entity {
@@ -12,12 +14,12 @@ Monster::Monster(sf::Vector2i initialPos, Breed breed)
     : Entity{initialPos}, m_breed{ std::move(breed) }
 {
     m_state = std::make_unique<RestState>(RestState{*this});
-    m_maxHeal = breed.data().maxHealth;
-    increaseHealth(m_maxHeal);
+    increaseHealth(m_breed.m_infos.maxHealth);
 }
 
 Monster::Monster(const Monster& other) : Entity{other}, m_breed {other.m_breed}
 {
+    m_state = std::unique_ptr<MonsterState>(other.m_state->cloneState());
 }
 
 Monster::~Monster() { m_state.release(); }
@@ -71,6 +73,11 @@ void Monster::onKilled(Entity* opponent)
         std::cout << std::setw(18) << std::left << "onKilled"
                   << " :: " << *this << " was killed by " << *opponent << "\n ";
     }
+}
+
+void Monster::draw(sf::RenderTarget& target, sf::RenderStates /*states*/) const
+{
+    target.draw(m_breed.m_graphics.sprite);
 }
 
 } // namespace cppRogue::entity

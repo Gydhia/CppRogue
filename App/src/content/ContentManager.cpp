@@ -162,18 +162,16 @@ bool ContentManager::loadItems(const std::string& relativePath)
     return true;
 }
 
-
-
-bool loadBreedData(cppRogue::entity::BreedInfo& infos, sf::Texture& texture, const nlohmann::json& breedNode)
+bool loadBreedData(cppRogue::entity::BreedInfo& infos, sf::Texture& textu, const nlohmann::json& breedNode)
 {
-    infos.armor = breedNode["armor"].get<int>();
-    infos.description = breedNode["description"].get<std::string>();
-    infos.dodge = breedNode["dodge"].get<int>();
-    infos.experience = breedNode["experience"].get<int>();
-    infos.maxHealth = breedNode["maxHealth"].get<int>();
-    infos.name = breedNode["name"].get<std::string>();
-    infos.speed = breedNode["speed"].get<int>();
-    infos.trackingDistance = breedNode["trackingDistance"].get<int>();
+    infos.armor = breedNode.contains("armor") ? breedNode["armor"].get<int>() : 0;
+    infos.description = breedNode.contains("description") ? breedNode["description"].get<std::string>() : "";
+    infos.dodge = breedNode.contains("dodge") ? breedNode["dodge"].get<int>() : 0;
+    infos.experience = breedNode.contains("experience") ? breedNode["experience"].get<int>() : 0;
+    infos.maxHealth = breedNode.contains("maxHealth")? breedNode["maxHealth"].get<int>() : 0;
+    infos.name = breedNode.contains("name") ? breedNode["name"].get<std::string>() : "";
+    infos.speed = breedNode.contains("speed") ? breedNode["speed"].get<int>() : 0;
+    infos.trackingDistance = breedNode.contains("trackingDistance") ? breedNode["trackingDistance"].get<int>() : 0;
 
     if (breedNode.contains("motilities"))
     {
@@ -183,12 +181,13 @@ bool loadBreedData(cppRogue::entity::BreedInfo& infos, sf::Texture& texture, con
             infos.motilities += slotNode.get<Motility>();
         }
     }
-    sf::IntRect area{breedNode["graphics"]["bounds"]["x"].get<int>(),
-                     breedNode["graphics"]["bounds"]["y"].get<int>(),
-                     breedNode["graphics"]["bounds"]["width"].get<int>(),
-                     breedNode["graphics"]["bounds"]["height"].get<int>()};
-    texture.loadFromFile(breedNode["graphics"]["texture"].get<std::string>(), area);
 
+    // Load and store texture
+    std::string path = "data/" + breedNode["graphics"]["texture"].get<std::string>();
+    auto texture = texture::load(path);
+    if (!texture.has_value()) { return false; }
+    
+    textu = texture.value();
     return true;
 }
 
@@ -205,9 +204,14 @@ bool ContentManager::loadBreeds(const std::string& relativePath)
         sf::Texture texture{};
         if (loadBreedData(infos, texture, breedNode))
         {
-            GraphicsInfo graphics{texture};
-            // Create item with infos
-            m_breeds.emplace_back(std::make_shared<cppRogue::entity::Breed>(infos, graphics));
+            m_textures.emplace_back(std::make_shared<sf::Texture>(std::move(texture)));
+            const auto boundsNode = breedNode["graphics"]["bounds"];
+            GraphicsInfo graphics{*m_textures.back()};
+            graphics.setBounds(
+                {boundsNode["x"], boundsNode["y"], boundsNode["width"], boundsNode["height"]});
+
+            cppRogue::entity::Breed newBreed = cppRogue::entity::Breed{infos, graphics};
+            m_breeds.emplace_back(std::make_shared<cppRogue::entity::Breed>(newBreed));
         }
     }
 
