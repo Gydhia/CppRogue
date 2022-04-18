@@ -106,14 +106,12 @@ void run_game()
         }
 
         // Update our mighty hero
-        auto newPos = hero->position();
+        auto newPos = hero->isWaitingForInputs();
         for (entity::Monster& monster : monsters) { 
             auto mPos = monster.position();
             mPos.x += 1;
             monster.move(mPos);
         }
-        newPos.x += 1;
-        hero->move(newPos);
         // Draw
         window.clear();
         window.draw(arena);

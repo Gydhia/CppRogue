@@ -22,9 +22,16 @@ class Walk : public IAction
     //
     // IACTION INTERFACE
     //
+    Walk() = delete;
+    explicit Walk(entity::Entity& owner, direction::Ordinal dir);
+    ~Walk() override = default;
     Result onMake() override;
 
     static constexpr int StepSize{32};
+
+  private:
+    entity::Entity& m_owner;
+    direction::Ordinal m_dir;
 };
 
 } // namespace cppRogue::action

@@ -49,11 +49,8 @@ TEST_CASE("Breed data", "[Breed]")
     SECTION("Public API allowed to access all breed data (see list in Breed.json) except graphics")
     {
         ContentManager gameData{};
-        if (!gameData.load("data/content.json"))
-        {
-            std::cerr << "Game content loading failed !" << '\n';
-            return;
-        }
+        //REQUIRE(gameData.load("data/content.json"));
+
         std::vector<cppRogue::entity::Breed> breeds;
         for (auto breed : gameData.breeds()) { 
             breeds.emplace_back(*breed);

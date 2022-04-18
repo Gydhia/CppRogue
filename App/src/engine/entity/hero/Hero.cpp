@@ -1,6 +1,9 @@
 #include "Hero.hpp"
 
+#include "engine/action/Rest.hpp"
+#include "engine/action/Walk.hpp"
 #include "engine/core/AttackInfo.hpp"
+#include "engine/core/Direction.hpp"
 #include "engine/core/GameArena.hpp"
 #include "engine/core/Hit.hpp"
 #include "engine/core/utility/Debug.hpp"
@@ -8,6 +11,13 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include <iomanip>
+#include <SFML/Window/Keyboard.hpp>
+
+namespace cppRogue {
+namespace direction {
+enum class Ordinal;
+}
+}
 
 namespace cppRogue::entity {
 
@@ -45,6 +55,43 @@ bool Hero::isWaitingForInputs()
 {
     // If current behavior is not possible reset it
     if (m_behavior != nullptr && !m_behavior->isPossible(*this)) { markAsWaitingForInputs(); }
+    direction::Ordinal oDir = direction::Ordinal::None;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)) {
+        m_data.m_motilities -= Motility::Swim;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)) {
+        m_data.m_motilities += Motility::Fly;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { 
+        oDir = direction::Ordinal::W;
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        oDir = direction::Ordinal::E;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        oDir = direction::Ordinal::N;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        oDir = direction::Ordinal::S;
+    }
+
+    if (oDir != direction::Ordinal::None) {
+        cppRogue::action::Action walkAction = action::Action { action::Walk(*this, oDir)};
+    
+        const auto result = walkAction->make();
+        if (result.fallback)
+        {
+            action::Action resultedAction = result.fallback.value();
+            resultedAction->make();
+
+            *m_behavior = RestBehavior{};
+        }
+        else
+        {
+            *m_behavior = RestBehavior{};
+        }
+    }
 
     // If currently no behavior then user should do something
     return m_behavior == nullptr;

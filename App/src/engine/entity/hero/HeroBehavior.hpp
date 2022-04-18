@@ -47,6 +47,20 @@ class RestBehavior : public HeroBehavior
     void interrupt(entity::Hero& hero) override;
 };
 
+class MoveBehavior : public HeroBehavior
+{
+  public:
+    MoveBehavior() = default;
+    ~MoveBehavior() override = default;
+
+    //
+    // HeroBehavior INTERFACE
+    //
+    [[nodiscard]] RestBehavior* cloneBehavior() const override;
+    bool isPossible(const entity::Hero& hero) override;
+    void interrupt(entity::Hero& hero) override;
+};
+
 } // namespace cppRogue::entity
 
 #endif
