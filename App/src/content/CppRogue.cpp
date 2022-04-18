@@ -77,8 +77,17 @@ void run_game()
 
     // Get our hero
     auto& hero = gameData.hero();
-    const auto& breed = gameData.breeds()[0];
-    entity::Monster monster = entity::Monster{sf::Vector2i{150, 450}, *breed};
+
+    std::vector<entity::Monster> monsters;
+    monsters.reserve(gameData.breeds().size());
+    int index = 0;
+    for (auto&& breed : gameData.breeds())
+    {
+        entity::Monster monster{sf::Vector2i{0, 10 + (index * 40)}, *breed};
+        monsters.emplace_back(monster);
+        index++;
+    }
+
     // @TODO
     // @TODO Construire un monstre de chaque "Breed"
     // @TODO
@@ -98,16 +107,21 @@ void run_game()
 
         // Update our mighty hero
         auto newPos = hero->position();
-        auto monsterPos = monster.position();
-        monsterPos.x += 1;
+        for (entity::Monster& monster : monsters) { 
+            auto mPos = monster.position();
+            mPos.x += 1;
+            monster.move(mPos);
+        }
         newPos.x += 1;
         hero->move(newPos);
-        monster.move(monsterPos);
         // Draw
         window.clear();
         window.draw(arena);
         window.draw(*hero);
-        window.draw(monster);
+        for (entity::Monster& monster : monsters)
+        {
+            window.draw(monster);
+        }
         window.display();
     }
 

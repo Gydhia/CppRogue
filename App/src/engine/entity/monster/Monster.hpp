@@ -62,6 +62,8 @@ class Monster : public Entity
 
     void onKilled(Entity* opponent) override;
 
+    void onMove(const sf::Vector2i& oldPos, const sf::Vector2i& newPos) override;
+
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     //

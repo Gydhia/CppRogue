@@ -75,6 +75,11 @@ void Monster::onKilled(Entity* opponent)
     }
 }
 
+void Monster::onMove(const sf::Vector2i& oldPos, const sf::Vector2i& newPos) 
+{
+    m_breed.m_graphics.setPosition({static_cast<float>(newPos.x), static_cast<float>(newPos.y)});
+}
+
 void Monster::draw(sf::RenderTarget& target, sf::RenderStates /*states*/) const
 {
     target.draw(m_breed.m_graphics.sprite);
