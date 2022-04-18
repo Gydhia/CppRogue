@@ -162,6 +162,7 @@ TEST_CASE("Monster is polymorphic", "[Entity]")
             const entity::MonsterState* trollState = trollPtr->activeState();
             const entity::MonsterState* anotherTrollState = anotherTrollPtr->activeState();
             REQUIRE(trollState != nullptr);
+            REQUIRE(anotherTrollState != nullptr);
             REQUIRE(trollState != anotherTrollState);
         }
 
