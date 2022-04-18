@@ -57,23 +57,27 @@ bool Hero::isWaitingForInputs()
     if (m_behavior != nullptr && !m_behavior->isPossible(*this)) { markAsWaitingForInputs(); }
     direction::Ordinal oDir = direction::Ordinal::None;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown) && m_data.m_motilities[Motility::Swim]) {
         m_data.m_motilities -= Motility::Swim;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp) && m_data.m_motilities[Motility::Fly]) {
         m_data.m_motilities += Motility::Fly;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { 
         oDir = direction::Ordinal::W;
+        keyPressed = true;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         oDir = direction::Ordinal::E;
+        keyPressed = true;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         oDir = direction::Ordinal::N;
+        keyPressed = true;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         oDir = direction::Ordinal::S;
+        keyPressed = true;
     }
 
     if (oDir != direction::Ordinal::None) {

@@ -172,6 +172,10 @@ class Entity : public sf::Drawable
     //
     virtual void onKilled(Entity* /*opponent*/){};
 
+    [[nodiscard]] inline GameArena* gameArena() const { return m_gameArena; }
+
+    inline void setGameArena(GameArena* gameArena) { m_gameArena = gameArena; }
+
     //
     // Drawable INTERFACE
     //
@@ -198,6 +202,7 @@ class Entity : public sf::Drawable
     // Unique instance ID used to quickly test if two entities are the same
     unsigned int m_id;
     static unsigned int m_sNextId;
+    GameArena* m_gameArena;
 };
 
 } // namespace cppRogue::entity

@@ -93,6 +93,7 @@ class Hero : public Entity
 
     // Null when no behavior at all (wait for inputs)
     std::unique_ptr<HeroBehavior> m_behavior;
+    bool keyPressed = false;
 };
 
 } // namespace cppRogue::entity

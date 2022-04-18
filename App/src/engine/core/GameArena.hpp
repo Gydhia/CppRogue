@@ -64,9 +64,8 @@ class GameArena : public sf::Drawable
     sf::Vector2i m_mapSize;
     std::vector<environment::TileInfo> m_tilesInfo;
 
-    // @TODO
-    // @TODO Ajouter ici les membres privées (methodes et attributs)
-    // @TODO
+    std::shared_ptr<entity::Hero> m_hero;
+    std::vector<std::shared_ptr<entity::Monster>> m_monsters;
 };
 
 } // namespace cppRogue

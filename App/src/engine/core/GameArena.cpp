@@ -77,54 +77,43 @@ bool GameArena::loadMap(const std::string& relativePath, const std::string& data
 
 bool GameArena::addHero(std::shared_ptr<entity::Hero> hero)
 {
-    // @TODO
-    // @TODO Ajouter le hero à cette instance de GameArena si c'est possible
-    // @TODO Un seul héro doit pouvoir être ajouté
-    // @TODO
-
-    // @TODO
-    // @TODO Mettre à jour la référence vers GameArena du héro
-    // @TODO
+    if (!m_hero)
+    {
+        m_hero = hero;
+        m_hero->setGameArena(this);
+    }
 
     return false;
 }
 
 bool GameArena::addMonster(std::shared_ptr<entity::Monster> monster)
 {
-    // @TODO
-    // @TODO Ajouter le monstre à cette instance de GameArena si c'est possible
-    // @TODO
-
-    // @TODO
-    // @TODO Mettre à jour la référence vers GameArena du monstre
-    // @TODO
+    m_monsters.emplace_back(monster);
+    monster->setGameArena(this);
 
     return false;
 }
 
 bool GameArena::canEnter(const entity::Entity& entity, const sf::Vector2i& position) const
 {
-    // @TODO
-    // @TODO Vérifier que la position monde (@p position) est valide dans le référentiel de la carte
-    // @TODO
+    environment::MapCoords mapCoord{position.x, position.y};
 
-    // @TODO
-    // @TODO Vérifier que la tuile à la position (@p position) est bien accessible pour @p entity
-    // @TODO
+    if (this->m_map.inBounds(mapCoord))
+    {
+        if (this->m_map.at(mapCoord).canEnter(entity.motilities())) { return true; }
+    }
 
     return false;
 }
 
 entity::Entity* GameArena::entityAt(const sf::Vector2i& position) const
 {
-    // @TODO
-    // @TODO Récupérer l'entité dans la tuile (reférentiel carte) correspondant
-    // @TODO à la position @p position (référentiel monde)
-    // @TODO
-
-    // @INFO
-    // @INFO Une seule entité est autorisée dans chaque tuile de la carte
-    // @INFO
+    for (auto& monster : m_monsters) { 
+        if (monster->position() == position) 
+            return monster.get();
+    }
+    if (m_hero->position() == position) 
+        return m_hero.get();
 
     return nullptr;
 }
