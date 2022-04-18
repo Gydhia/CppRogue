@@ -164,7 +164,7 @@ bool ContentManager::loadItems(const std::string& relativePath)
 
 
 
-bool loadBreedData(cppRogue::entity::BreedInfo& infos, const nlohmann::json& breedNode) 
+bool loadBreedData(cppRogue::entity::BreedInfo& infos, sf::Texture& texture, const nlohmann::json& breedNode)
 {
     infos.armor = breedNode["armor"].get<int>();
     infos.description = breedNode["description"].get<std::string>();
@@ -183,6 +183,11 @@ bool loadBreedData(cppRogue::entity::BreedInfo& infos, const nlohmann::json& bre
             infos.motilities += slotNode.get<Motility>();
         }
     }
+    sf::IntRect area{breedNode["graphics"]["bounds"]["x"].get<int>(),
+                     breedNode["graphics"]["bounds"]["y"].get<int>(),
+                     breedNode["graphics"]["bounds"]["width"].get<int>(),
+                     breedNode["graphics"]["bounds"]["height"].get<int>()};
+    texture.loadFromFile(breedNode["graphics"]["texture"].get<std::string>(), area);
 
     return true;
 }
@@ -197,10 +202,12 @@ bool ContentManager::loadBreeds(const std::string& relativePath)
     {
         // Parse breed data
         cppRogue::entity::BreedInfo infos{};
-        if (loadBreedData(infos, breedNode))
+        sf::Texture texture{};
+        if (loadBreedData(infos, texture, breedNode))
         {
+            GraphicsInfo graphics{texture};
             // Create item with infos
-            m_breeds.emplace_back(std::make_shared<cppRogue::entity::Breed>(infos));
+            m_breeds.emplace_back(std::make_shared<cppRogue::entity::Breed>(infos, graphics));
         }
     }
 

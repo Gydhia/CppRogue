@@ -16,11 +16,7 @@
 // @TODO Compléter l'implémentation de "Breed"
 // @TODO L'API publique ne doit pas être modifiée
 // @TODO
-//
-// @TODO
-// @TODO Compléter les tests dans `BreedTests.cpp`
-// @TODO
-
+// 
 // @TODO
 // @TODO Ajouter le/les attributs manquants pour pouvoir charger toutes les données du JSON
 // @TODO Voir `data/Monster/breeds.json`
@@ -70,7 +66,7 @@ struct DefenseInfo
 class Breed
 {
   public:
-    explicit Breed(BreedInfo characteristics);
+    explicit Breed(BreedInfo characteristics, GraphicsInfo graphics);
     ~Breed() = default;
 
     /* GETTERS */
@@ -89,6 +85,7 @@ class Breed
     std::vector<DefenseInfo> m_defenses;
 
     BreedInfo& m_infos;
+    GraphicsInfo& m_graphics;
     // Special private access to Monster for convenience
     friend class Monster;
 };

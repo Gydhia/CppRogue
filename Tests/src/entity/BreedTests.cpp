@@ -13,7 +13,8 @@ namespace cppRogue {
 TEST_CASE("Breed creation", "[Breed]")
 {
     auto emptySpecs = cppRogue::entity::BreedInfo{};
-    auto breed = cppRogue::entity::Breed(emptySpecs);
+    auto emptyGraphics = GraphicsInfo{sf::Texture{}};
+    auto breed = cppRogue::entity::Breed(emptySpecs, emptyGraphics);
 
     SECTION("Can add attacks to a breed")
     {
@@ -47,29 +48,19 @@ TEST_CASE("Breed data", "[Breed]")
 {
     SECTION("Public API allowed to access all breed data (see list in Breed.json) except graphics")
     {
-        auto specs = cppRogue::entity::BreedInfo{};
-        specs.name = "CSharp";
-        specs.description = "A language that should be thrown into a deep abyss !";
-        specs.maxHealth = 10;
-        specs.speed = 2;
-        specs.dodge = 3;
-        specs.experience = 1;
-        specs.trackingDistance = 2;
-        specs.motilities = {Motility::Swim};
-
-        auto breed = cppRogue::entity::Breed(specs);
-
         ContentManager gameData{};
         if (!gameData.load("data/content.json"))
         {
             std::cerr << "Game content loading failed !" << '\n';
             return;
         }
-
+        std::vector<cppRogue::entity::Breed> breeds;
         for (auto breed : gameData.breeds()) { 
+            breeds.emplace_back(*breed);
             if (breed.get()->data().name == "") 
                 REQUIRE(false);
         }
+
         REQUIRE(true);
     }
 }

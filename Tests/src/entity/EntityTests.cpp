@@ -9,7 +9,10 @@ namespace cppRogue {
 
 TEST_CASE("Can create an Entity (Monster or Hero)", "[Entity]")
 {
-    entity::Monster monster{sf::Vector2i{0, 1}, "Troll", 100, 2};
+    entity::Breed monsterBreed = entity::Breed{entity::BreedInfo{
+        "Troll", "An ugly shit", 3, 100, Energy::NormalSpeed, 1, 3, Motilities{Motility::Walk}, 5},
+        GraphicsInfo{sf::Texture{}}};
+    entity::Monster monster{sf::Vector2i{0, 1}, monsterBreed};
 
     std::string name{"Dwarf"};
     std::string description{
@@ -54,7 +57,10 @@ TEST_CASE("Can create an Entity (Monster or Hero)", "[Entity]")
 
 TEST_CASE("Entity general behavior", "[Entity]")
 {
-    entity::Monster troll{sf::Vector2i{0, 1}, "Troll", 100, 2};
+    entity::Breed monsterBreed = entity::Breed{entity::BreedInfo{
+        "Troll", "An ugly shit", 3, 100, Energy::NormalSpeed, 1, 3, Motilities{Motility::Walk}, 5},
+        GraphicsInfo{sf::Texture{}}};
+    entity::Monster troll{sf::Vector2i{0, 1}, monsterBreed};
 
     entity::Race race{{}, {}, {}};
     entity::HeroInfo info{"Dwarf", race};
@@ -121,7 +127,10 @@ TEST_CASE("Entity general behavior", "[Entity]")
 
 TEST_CASE("Monster is polymorphic", "[Entity]")
 {
-    entity::Entity* troll = new entity::Monster{sf::Vector2i{0, 1}, "Troll", 100, 2};
+    entity::Breed monsterBreed = entity::Breed{entity::BreedInfo{
+        "Troll", "An ugly shit", 3, 100, Energy::NormalSpeed, 1, 3, Motilities{Motility::Walk}, 5},
+        GraphicsInfo{sf::Texture{}}};
+    entity::Entity* troll = new entity::Monster{sf::Vector2i{0, 1}, monsterBreed};
 
     SECTION("Dynamic cast to child type is allowed")
     {
@@ -153,7 +162,6 @@ TEST_CASE("Monster is polymorphic", "[Entity]")
             const entity::MonsterState* trollState = trollPtr->activeState();
             const entity::MonsterState* anotherTrollState = anotherTrollPtr->activeState();
             REQUIRE(trollState != nullptr);
-            REQUIRE(anotherTrollState != nullptr);
             REQUIRE(trollState != anotherTrollState);
         }
 

@@ -54,7 +54,10 @@ TEST_CASE("Can create an Attack action", "[Action]")
     entity::Hero hero{sf::Vector2i{0, 1}, info};
 
     // Create a monster
-    entity::Monster monster{sf::Vector2i{0, 1}, "Troll", 100, 2};
+    entity::Breed monsterBreed = entity::Breed{entity::BreedInfo{
+            "Troll", "An ugly shit", 3, 100, Energy::NormalSpeed, 1, 3, Motilities{Motility::Walk}, 5}, 
+            GraphicsInfo{sf::Texture{}}};
+    entity::Monster monster{sf::Vector2i{0, 1}, monsterBreed};
 
     // Create an attack action
     action::Action attackAction = action::Action{action::Attack(hero)};

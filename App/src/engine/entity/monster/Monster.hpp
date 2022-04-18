@@ -86,7 +86,7 @@ class Monster : public Entity
     //
     // Misc
     //
-    [[nodiscard]] inline const MonsterState* activeState() const { return m_state; }
+    [[nodiscard]] inline const MonsterState* activeState() const { return m_state.get(); }
 
     friend std::ostream& operator<<(std::ostream& os, const Monster& monster)
     {
@@ -100,7 +100,7 @@ class Monster : public Entity
     int m_speed{};
     Motilities m_motilities{Motility::Walk};
 
-    MonsterState* m_state;
+    std::unique_ptr<MonsterState> m_state;
     cppRogue::entity::Breed m_breed;
 };
 } // namespace cppRogue::entity

@@ -7,7 +7,8 @@
 
 namespace cppRogue::entity {
 
-    Breed::Breed(BreedInfo characteristics) : m_infos{characteristics}
+    Breed::Breed(BreedInfo characteristics, GraphicsInfo graphics)
+    : m_infos{characteristics}, m_graphics{graphics}
     { 
     } // namespace cppRogue::entity
 
