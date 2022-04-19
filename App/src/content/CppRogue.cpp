@@ -76,15 +76,17 @@ void run_game()
     }
 
     // Get our hero
-    auto& hero = gameData.hero();
+    auto hero = gameData.hero();
+    arena.addHero(hero);
 
-    std::vector<entity::Monster> monsters;
-    monsters.reserve(gameData.breeds().size());
     int index = 0;
     for (auto&& breed : gameData.breeds())
     {
-        entity::Monster monster{sf::Vector2i{0, 10 + (index * 40)}, *breed};
-        monsters.emplace_back(monster);
+        sf::Vector2i newPos{rand() % 36 * 32, rand() % 28 * 32};
+        entity::Monster monster{newPos, *breed};
+        monster.onMove(newPos, newPos);
+        arena.addMonster(std::make_shared<entity::Monster>(monster));
+
         index++;
     }
 
@@ -107,19 +109,11 @@ void run_game()
 
         // Update our mighty hero
         auto newPos = hero->isWaitingForInputs();
-        for (entity::Monster& monster : monsters) { 
-            auto mPos = monster.position();
-            mPos.x += 1;
-            monster.move(mPos);
-        }
+ 
         // Draw
         window.clear();
         window.draw(arena);
-        window.draw(*hero);
-        for (entity::Monster& monster : monsters)
-        {
-            window.draw(monster);
-        }
+
         window.display();
     }
 

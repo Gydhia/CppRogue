@@ -30,8 +30,8 @@ class Walk : public IAction
     static constexpr int StepSize{32};
 
   private:
+    direction::Ordinal m_ordinalDir;
     entity::Entity& m_owner;
-    direction::Ordinal m_dir;
 };
 
 } // namespace cppRogue::action

@@ -13,14 +13,14 @@ void IAction::bindHero(entity::Hero& hero)
 {
     m_entity = &hero;
     m_owner = Bound::Hero;
-    // m_arena = &m_entity->arena();
+    m_arena = m_entity->gameArena();
 }
 
 void IAction::bindMonster(entity::Monster& monster)
 {
     m_entity = &monster;
     m_owner = Bound::Monster;
-    // m_arena = &m_entity->arena();
+    m_arena = m_entity->gameArena();
 }
 
 entity::Entity* IAction::entity() { return m_entity; };

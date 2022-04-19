@@ -96,7 +96,7 @@ bool GameArena::addMonster(std::shared_ptr<entity::Monster> monster)
 
 bool GameArena::canEnter(const entity::Entity& entity, const sf::Vector2i& position) const
 {
-    environment::MapCoords mapCoord{position.x, position.y};
+    environment::MapCoords mapCoord = this->m_map.coordinates(position);
 
     if (this->m_map.inBounds(mapCoord))
     {
@@ -108,12 +108,12 @@ bool GameArena::canEnter(const entity::Entity& entity, const sf::Vector2i& posit
 
 entity::Entity* GameArena::entityAt(const sf::Vector2i& position) const
 {
-    for (auto& monster : m_monsters) { 
-        if (monster->position() == position) 
-            return monster.get();
+    if (m_hero->position() == position) { return m_hero.get(); }
+
+    for (auto&& monster : m_monsters)
+    {
+        if (monster->position() == position) { return monster.get(); }
     }
-    if (m_hero->position() == position) 
-        return m_hero.get();
 
     return nullptr;
 }
@@ -123,12 +123,10 @@ entity::Entity* GameArena::entityAt(const sf::Vector2i& position) const
 //
 void GameArena::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    // Draw the whole map
     m_map.draw(target, states);
 
-    // @TODO
-    // @TODO Afficher les différentes entités (Héro et Monstres)
-    // @TODO
+    m_hero->draw(target, states);
+    for (auto&& monster : m_monsters) { monster->draw(target, states); }
 }
 
 } // namespace cppRogue

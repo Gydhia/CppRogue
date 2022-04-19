@@ -39,10 +39,13 @@ std::vector<Hit> Monster::onGenerateMeleeHits(const Entity& opponent)
             meleeAttacks.emplace_back(attack);
     }
 
-    int index = abs(rand()) % meleeAttacks.size();
-
     std::vector<Hit> hits;
-    hits.emplace_back( Hit(meleeAttacks[index]));
+    if (!meleeAttacks.empty()) { 
+        int index = abs(rand()) % meleeAttacks.size();
+        hits.emplace_back(Hit(meleeAttacks[index]));
+    } else {
+        hits.emplace_back(AttackInfo{"Melee touch", 10});
+    }
     
     return hits;
 }
